@@ -1,0 +1,129 @@
+\documentclass{article}
+\usepackage{maa-monthly}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
+ 
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\newtheorem*{remark}{Remark}
+
+\begin{document}
+
+\title{The Uniformity of High Accuracy Digits}
+\markright{The Uniformity of High Accuracy}
+\author{The Author}
+
+\maketitle
+
+\begin{abstract}
+In this article we'll give a simple reason why the high accuracy digits from physical measurements rapidly approach uniformity.
+\end{abstract}
+
+
+\noindent
+Take some physical property such as temperature, measure it to very high accuracy, and sample one of its low order bits -- perhaps the 10th bit beyond the decimal point. What's the distribution of this bit? (For simplicity we'll represent our random variables in binary throughout this discussion.)
+
+The obvious candidate is the Bernoulli distribution with $p=0.5$. Since there are only two possible outcomes, $0$ and $1$, the Bernoulli distribution is hard to avoid. But why $p=0.5$?
+
+If pressed, most would probably reason by symmetry. There simply isn't any obvious reason why one digit should be more likely than the other. Alternatively, a few might reach for something more high powered such as \textit{normal numbers}. But in fact an elegant argument that sits between these two extremes is available. In particular we will prove the following statement:
+
+\begin{theorem}
+Let $X$ be a random variable that is distributed continuously according to a Riemann integrable density function $f$. Then the digits trailing $n$ places beyond the decimal point, if interpreted as a real number in the interval $[0,1]$, converge in distribution to the standard uniform distribution as $n\to\infty$.
+\end{theorem}
+
+If the bits beyond the 10th place constitute an approximately uniform random variable, then the individual bits -- including the 10th itself -- must be Bernoulli random variables with $p$ very close to $0.5$ and vice versa.
+
+The upshot is that we have replaced the vague "what other distribution could it possibly be?" with the concrete but still very flexible "provided the temperature is distributed according to \textit{some} Riemann integrable density" -- all without roping in the \textit{strong law of large numbers} and friends. What's more, by studying the speed of convergence we'll also be able to get a better quantitative grasp of the situation. Onto the proof:
+
+\begin{proof}
+We begin by denoting the fractional part of $X$ as $\{X\}$. Then the density of $\{X\}$ is given by
+\[
+\tilde{f}(x) =
+\begin{cases}
+\sum_{i\in\mathbb{Z}}f(i+x) & 0 < x \leq 1\\
+0 & \text{otherwise}
+\end{cases}
+\]
+Intuitively this makes sense. But densities can be counter-intuitive. So let's double check. If we denote the corresponding cumulative distribution functions $F$ and $\tilde{F}$, then clearly for $0<x\leq1$ we have
+\[
+\tilde{F}(x) = \sum_{i\in\mathbb{Z}}F(i+x)-F(i)\,.
+\]
+We're just summing up all the probabilities corresponding to intervals $[i,i+x]$ where the fractional part is less than $x$. Then differentiate both sides with respect to $x$.
+\[
+\begin{split}
+\tilde{f}(x) & =\frac{d}{dx}\sum_{i\in\mathbb{Z}}F(i+x)-F(i)\\
+& =\frac{d}{dx}\sum_{i\in\mathbb{Z}}\int_0^x f(i+x)\,dx\\
+& =\frac{d}{dx}\int_0^x\sum_{i\in\mathbb{Z}}f(i+x)\,dx\qquad\text{by Fubini's theorem}\\
+& =\sum_{i\in\mathbb{Z}}f(i+x)\,dx
+\end{split}
+\]
+as desired.
+
+Now that we know the density of $\{X\}$, the density for digits that are trailing by $n$ places is close at hand. If we continue expressing our numbers in binary, it'll be the density of the random variable $\{2^nX\}$. After all, multiplying by $2^n$ just shifts all the bits $n$ places to the left.
+
+The density of $2^nX$, which we'll denote as $f_{2^n}$, is given by transforming the density of $X$ into
+\[
+f_{2^n}(x) = \frac{1}{2^n}\;f\left(\frac{x}{2^n}\right)\,.
+\]
+Thus, just as before, we get the following density for $\{2^nX\}$:
+\[
+\tilde{f}_{2^n}(x)=
+\begin{cases}
+\sum_{i\in\mathbb{Z}}\frac{1}{2^n}\,f\left(\frac{i+x}{2^n}\right) & 0<x\leq 1\\
+0 & \text{otherwise}
+\end{cases}
+\]
+But now notice that this is actually just a Riemann sum! For any fixed $x$ we're evaluating $f$ at distances $2^{-n}$ apart and multiplying the result by the width of the corresponding interval. And since $f$, being a probability density, integrates to 1 we conclude
+\[
+\lim_{n\rightarrow\infty}\tilde{f}_{2^n}(x) = 
+\begin{cases}
+1 & 0<x\leq 1\\
+0 & \text{otherwise}
+\end{cases}
+\]
+which is exactly the density of the standard uniform distribution.
+\end{proof}
+
+\let\thefootnote\relax\footnote{Note that we could've alternatively used this proof to explain the uniformity of a wheel of fortune. One still starts with the random variable $\{X\}$ because a wheel of fortune that is normed to a circumference of $1$ simply removes the integer part. However, in this case one increases the uniformity not by making more accurate readings but by giving the wheel a stronger push. This increases the variance of the outcome and is modeled by the mathematically equivalent $\{\alpha X\}$ as $\alpha\to\infty$ rather than $\{2^n X\}$ as $n\to\infty$. See also \cite{Zaman}.}
+\addtocounter{footnote}{-1}\let\thefootnote\svthefootnote
+This only leaves the question how fast this convergence is. How uniform is the 10th bit exactly? For this we can now use standard machinery for the convergence of Riemann sums to their respective limits. Rather than wading through the details let's just quote a few results from \cite{Me} here.
+
+\begin{theorem}
+If $f$ is Lipschitz-continuous, then the $L_1$ distance between $f_{2^n}$ and the standard uniform density is bounded above by $2^{-n}\sum_{i\in\mathbb{Z}}K_i$ where $K_i$ is the Lipschitz constant of $f$ on the interval $[i,i+1]$.
+\end{theorem}
+
+Anybody concerned about the infinite sum $\sum_{i\in\mathbb{Z}}K_i$ may also consider the following upper bound:
+
+\begin{theorem}
+If $f$ is twice differentiable, then it it holds that
+\[
+\sum_{i\in\mathbb{Z}}K_i \leq \int_\mathbb{R} |f'(x)|+|f''(x)|\,dx\,.
+\]
+\end{theorem}
+
+In any case, for usual suspects such as the standard normal or the exponential distribution with $\lambda=1$ the infinite sum works out to the values $1.2115\dots$ and $1.8520\dots$ respectively. And that's before multiplying by the leading factor $2^{-n}$. So let's add the plausible assumption that our temperature distribution is at least roughly in that neighborhood. Then for $n=10$ we arrive at $L_1$ distances no larger than $0.002$.
+
+Finally, the probability that our 10th bit is $0$ can now be estimated using
+\[
+\begin{split}
+\int_0^{0.5} f_{2^n}\,dx
+& = \int_0^{0.5} 1 + f_{2^n} - 1\,dx\\
+& \leq \int_0^{0.5}1\,dx + \int_0^{0.5} |f_{2^n}-1|\,dx\\
+& \leq 0.5+2^{-n}\sum_{i\in\mathbb{Z}}K_i\,.
+\end{split}
+\]
+
+The same logic can of course also be used on the interval $[0.5,1]$ to attain a lower bound. Thus we are now in the position to claim with some confidence that the $p$ for the 10th trailing bit of our temperature measurement is likely somewhere in the range $[0.498,0.502]$. We may not know the distribution of the temperature exactly, but we didn't need to. All we needed to know was that the distribution is reasonably regular.
+
+\begin{thebibliography}{1}
+\bibitem{Zaman}
+Arif Zaman, 2004, The Density of the Fractional Part of a Normal Distribution \textit{Unpublished but available on Arif Zaman's website}
+	
+\bibitem{Me}
+By the author
+\end{thebibliography}
+
+\vfill\eject
+
+\end{document}
