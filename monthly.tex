@@ -41,11 +41,11 @@ We begin by denoting the fractional part of $X$ as $\{X\}$. Then the density of 
 \[
 \tilde{f}(x) =
 \begin{cases}
-\sum_{i\in\mathbb{Z}}f(i+x) & 0 < x \leq 1\\
+\sum_{i\in\mathbb{Z}}f(i+x) & 0 \leq x < 1\\
 0 & \text{otherwise}
 \end{cases}
 \]
-Intuitively this makes sense. But densities can be counter-intuitive. So let's double check. If we denote the corresponding cumulative distribution functions $F$ and $\tilde{F}$, then clearly for $0<x\leq1$ we have
+Intuitively this makes sense. But densities can be counter-intuitive. So let's double check. If we denote the corresponding cumulative distribution functions $F$ and $\tilde{F}$, then clearly for $0 \leq x < 1$ we have
 \[
 \tilde{F}(x) = \sum_{i\in\mathbb{Z}}F(i+x)-F(i)\,.
 \]
@@ -70,7 +70,7 @@ Thus, just as before, we get the following density for $\{2^nX\}$:
 \[
 \tilde{f}_{2^n}(x)=
 \begin{cases}
-\sum_{i\in\mathbb{Z}}\frac{1}{2^n}\,f\left(\frac{i+x}{2^n}\right) & 0<x\leq 1\\
+\sum_{i\in\mathbb{Z}}\frac{1}{2^n}\,f\left(\frac{i+x}{2^n}\right) & 0\leq x < 1\\
 0 & \text{otherwise}
 \end{cases}
 \]
@@ -78,7 +78,7 @@ But now notice that this is actually just a Riemann sum! For any fixed $x$ we're
 \[
 \lim_{n\rightarrow\infty}\tilde{f}_{2^n}(x) = 
 \begin{cases}
-1 & 0<x\leq 1\\
+1 & 0\leq x< 1\\
 0 & \text{otherwise}
 \end{cases}
 \]
@@ -102,7 +102,7 @@ If $f$ is twice differentiable, then it it holds that
 \]
 \end{theorem}
 
-In any case, for usual suspects such as the standard normal or the exponential distribution with $\lambda=1$ the infinite sum works out to the values $1.2115\dots$ and $1.8520\dots$ respectively. And that's before multiplying by the leading factor $2^{-n}$. So let's add the plausible assumption that our temperature distribution is at least roughly in that neighborhood. Then for $n=10$ we arrive at $L_1$ distances no larger than $0.002$.
+In any case, for usual suspects such as the standard normal or the exponential distribution with $\lambda=1$ the infinite sum works out to the values $1.2115...$ and $1.8520...$ respectively. And that's before multiplying by the leading factor $2^{-n}$. So let's add the plausible assumption that our temperature distribution is at least roughly in that neighborhood. Then for $n=10$ we arrive at $L_1$ distances no larger than $0.002$.
 
 Finally, the probability that our 10th bit is $0$ can now be estimated using
 \[
