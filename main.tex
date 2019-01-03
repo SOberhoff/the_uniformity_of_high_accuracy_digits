@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage{maa-monthly}
+\usepackage{amsmath, amsthm, amsfonts}
 
 \theoremstyle{theorem}
 \newtheorem{theorem}{Theorem}
@@ -10,9 +10,8 @@
 
 \begin{document}
 
-\title{The Uniformity of High Accuracy Digits}
-\markright{The Uniformity of High Accuracy}
-\author{The Author}
+\title{The Uniformity Of High Accuracy Digits}
+\author{Sebastian Oberhoff}
 
 \maketitle
 
@@ -22,7 +21,7 @@ In this article we'll give a simple reason why the high accuracy digits from phy
 
 
 \noindent
-Take some physical property such as temperature, measure it to very high accuracy, and sample one of its low order bits -- perhaps the 10th bit beyond the decimal point. What's the distribution of this bit? (For simplicity we'll represent our random variables in binary throughout this discussion.)
+Take some physical property such as temperature, measure it to very high accuracy, and sample one of its low order bits---perhaps the 10th bit beyond the decimal point. What's the distribution of this bit? (For simplicity we'll represent our random variables in binary throughout this discussion.)
 
 The obvious candidate is the Bernoulli distribution with $p=0.5$. Since there are only two possible outcomes, $0$ and $1$, the Bernoulli distribution is hard to avoid. But why $p=0.5$?
 
@@ -32,9 +31,11 @@ If pressed, most would probably reason by symmetry. There simply isn't any obvio
 Let $X$ be a random variable that is distributed continuously according to a Riemann integrable density function $f$. Then the digits trailing $n$ places beyond the decimal point, if interpreted as a real number in the interval $[0,1]$, converge in distribution to the standard uniform distribution as $n\to\infty$.
 \end{theorem}
 
-If the bits beyond the 10th place constitute an approximately uniform random variable, then the individual bits -- including the 10th itself -- must be Bernoulli random variables with $p$ very close to $0.5$ and vice versa.
+If the bits beyond the 10th place constitute an approximately uniform random variable, then the individual bits---including the 10th itself---must be Bernoulli random variables with $p$ very close to $0.5$ and vice versa.
 
-The upshot is that we have replaced the vague "what other distribution could it possibly be?" with the concrete but still very flexible "provided the temperature is distributed according to \textit{some} Riemann integrable density" -- all without roping in the \textit{strong law of large numbers} and friends. What's more, by studying the speed of convergence we'll also be able to get a better quantitative grasp of the situation. Onto the proof:
+The upshot is that we have replaced the vague "what other distribution could it possibly be?" with the concrete but still very flexible "provided the temperature is distributed according to \textit{some} Riemann integrable density"---all without roping in the \textit{strong law of large numbers} and friends. What's more, by studying the speed of convergence we'll also be able to get a better quantitative grasp of the situation.
+
+Lastly, before we get going, it's worth noting that this proof has a strong kinship to \textit{Benford's law}. But where Benford's law strongly concerns itself with the exact distribution of digits we'll be able to shortcut the discussion drastically by only concerning ourselves with the proximity to uniformity. We lose some detail in the process, but gain in simplicity. Now, onto the proof:
 
 \begin{proof}
 We begin by denoting the fractional part of $X$ as $\{X\}$. Then the density of $\{X\}$ is given by
@@ -49,7 +50,7 @@ Intuitively this makes sense. But densities can be counter-intuitive. So let's d
 \[
 \tilde{F}(x) = \sum_{i\in\mathbb{Z}}F(i+x)-F(i)\,.
 \]
-We're just summing up all the probabilities corresponding to intervals $[i,i+x]$ where the fractional part is less than $x$. Then differentiate both sides with respect to $x$.
+We're just summing up all the probabilities corresponding to intervals $[i,i+x)$ where the fractional part is less than $x$. Then differentiate both sides with respect to $x$.
 \[
 \begin{split}
 \tilde{f}(x) & =\frac{d}{dx}\sum_{i\in\mathbb{Z}}F(i+x)-F(i)\\
@@ -85,9 +86,9 @@ But now notice that this is actually just a Riemann sum! For any fixed $x$ we're
 which is exactly the density of the standard uniform distribution.
 \end{proof}
 
-\let\thefootnote\relax\footnote{Note that we could've alternatively used this proof to explain the uniformity of a wheel of fortune. One still starts with the random variable $\{X\}$ because a wheel of fortune that is normed to a circumference of $1$ simply removes the integer part. However, in this case one increases the uniformity not by making more accurate readings but by giving the wheel a stronger push. This increases the variance of the outcome and is modeled by the mathematically equivalent $\{\alpha X\}$ as $\alpha\to\infty$ rather than $\{2^n X\}$ as $n\to\infty$. See also \cite{Zaman}.}
+\let\thefootnote\relax\footnote{Note that we could've alternatively used this proof to explain the uniformity of a wheel of fortune. One still starts with the random variable $\{X\}$ because a wheel of fortune that is normed to a circumference of $1$ simply removes the integer part. However, in this case one increases the uniformity not by making more accurate readings but by giving the wheel a stronger push. This increases the variance of the outcome and is modeled by the mathematically equivalent $\{\alpha X\}$ as $\alpha\to\infty$ rather than $\{2^n X\}$ as $n\to\infty$. See also \cite{zaman}.}
 \addtocounter{footnote}{-1}\let\thefootnote\svthefootnote
-This only leaves the question how fast this convergence is. How uniform is the 10th bit exactly? For this we can now use standard machinery for the convergence of Riemann sums to their respective limits. Rather than wading through the details let's just quote a few results from \cite{Me} here.
+This only leaves the question how fast this convergence is. How uniform is the 10th bit exactly? For this we can now use standard machinery for the convergence of Riemann sums to their respective limits. Rather than wading through the details let's just quote a few results from \cite{oberhoff} here.
 
 \begin{theorem}
 If $f$ is Lipschitz-continuous, then the $L_1$ distance between $f_{2^n}$ and the standard uniform density is bounded above by $2^{-n}\sum_{i\in\mathbb{Z}}K_i$ where $K_i$ is the Lipschitz constant of $f$ on the interval $[i,i+1]$.
@@ -117,11 +118,11 @@ Finally, the probability that our 10th bit is $0$ can now be estimated using
 The same logic can of course also be used on the interval $[0.5,1]$ to attain a lower bound. Thus we are now in the position to claim with some confidence that the $p$ for the 10th trailing bit of our temperature measurement is likely somewhere in the range $[0.498,0.502]$. We may not know the distribution of the temperature exactly, but we didn't need to. All we needed to know was that the distribution is reasonably regular.
 
 \begin{thebibliography}{1}
-\bibitem{Zaman}
+\bibitem{zaman}
 Arif Zaman, 2004, The Density of the Fractional Part of a Normal Distribution \textit{Unpublished but available on Arif Zaman's website}
 	
-\bibitem{Me}
-By the author
+\bibitem{oberhoff}
+Sebastian Oberhoff, 2018, Exact Sampling and Prefix Distributions
 \end{thebibliography}
 
 \vfill\eject
